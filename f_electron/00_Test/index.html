@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello</title>
+</head>
+<body>
+
+<div class="window">
+    <div class="bar">
+        <div class="drag"></div>
+        <button id="close" class="close">EXIT</button>
+    </div>
+    <div class="content">Hello World!</div>
+</div>
+
+</body>
+</html>
+
+
+<style>
+    button {
+        outline: none;
+        border: none;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        border: 0;
+    }
+
+    .window {
+        position: relative;
+        border-radius: 18px;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        background: rgb(80, 80, 80);
+    }
+
+    .bar {
+        position: relative;
+        display: flex;
+    }
+
+    .drag {
+        position: relative;
+        -webkit-app-region: drag;
+        -webkit-user-select: none;
+        width: 100%;
+        height: 30px;
+        z-index: 1;
+        background-color: rgb(50, 50, 50);
+    }
+
+    .close {
+        cursor: pointer;
+        position: relative;
+        z-index: 10;
+        height: 30px;
+        width: 60px;
+        background-color: rgb(50, 50, 50);
+        color: rgb(220, 220, 220);
+        font-weight: bolder;
+
+        transition: all 0.3s;
+    }
+
+    .close:hover {
+        background-color: crimson;
+    }
+
+    .content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        justify-items: center;
+    }
+</style>
+<script>
+    let {ipcRenderer} = require('electron')
+
+    const close = document.getElementById('close')
+    if (close) {
+        close.addEventListener('click', () => {
+            //发送关闭命令
+            ipcRenderer.send('window-close')
+        })
+    }
+</script>

@@ -1,0 +1,4 @@
+{
+  "header": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>Title</title>\n</head>\n<body>\n<div class=\"flex-center\">",
+  "footer": "\n</div>\n</body>\n<style>\n    * {\n        margin: 0;\n        padding: 0;\n        border: none;\n    }\n\n    body {\n        width: 100%;\n        background: rgb(35, 35, 35);\n    }\n\n    img {\n        max-width: 100%;\n        display: block;\n    }\n\n    .flex-center {\n        display: flex;\n        justify-content: center;\n        flex-wrap: wrap;\n    }\n\n    .img-wrapper {\n        width: 100%;\n    }\n</style>\n</html>\n"
+}

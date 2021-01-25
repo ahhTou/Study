@@ -1,0 +1,36 @@
+.app-wrapper {
+  background: rgb(60, 60, 60);
+  border-radius: 15px;
+  overflow: hidden;
+
+  .btn-line {
+    display: flex;
+    padding: 20px;
+
+    button {
+      border-radius: 8px;
+      background: rgb(12, 134, 250);
+      color: rgb(230, 230, 230);
+
+      padding: 0 20px 0 20px;
+      height: 50px;
+      margin: auto;
+      transition: all .3s;
+
+      .title1 {
+        font-size: 20px;
+        font-weight: bolder;
+      }
+
+      .title2 {
+        color: rgb(230, 230, 230);
+      }
+
+      &:hover {
+        box-shadow: 0 0 10px rgb(12, 134, 250);
+      }
+    }
+  }
+
+
+}

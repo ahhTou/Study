@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {
+    "simple-br": "/components/simple-br/SimpleBr",
+    "img": "/components/img/img"
+  }
+}

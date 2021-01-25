@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>管理界面</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <style>
+        @import url(css/index.css);
+    </style>
+</head>
+<body>
+<div id="wrap" class="settingForIndex">
+    <div id="sidebar">
+        <img id="profilePhoto" src="img/ProfilePhoto.jpg"/>
+        <div id="username">未登录</div>
+        <div class="options">影片档案</div>
+        <div class="options" id="exit">退出</div>
+        <div class="ahhTou">
+            <div>ahhTou</div>
+        </div>
+    </div>
+    <div id="content">
+        <div id="bannerWrapper">
+            <div class="contentTitle">我的最爱</div>
+            <ul id="bannerContent">
+                <li
+                        style="
+                background-image: url(./img/like/1.jpg);
+                background-size: cover;
+              "
+                >
+                    <span>天气之子</span>
+                </li>
+                <li
+                        style="
+                background-image: url(./img/like/2.jpg);
+                background-size: cover;
+              "
+                >
+                    <span>你的名字</span>
+                </li>
+                <li
+                        style="
+                background-image: url(./img/like/3.jpg);
+                background-size: cover;
+              "
+                >
+                    <span>拯救大兵瑞恩</span>
+                </li>
+            </ul>
+        </div>
+        <div id="listWrapper">
+            <div>
+                <div class="contentTitle">我的看过</div>
+                <div id="tableWithBtnLine">
+                    <div id="tableWrapper">
+                        <table cellspacing="0" >
+                            <thead>
+                            <tr>
+                                <th>电影名称</th>
+                                <th>电影类型</th>
+                                <th>我的评分</th>
+                                <th>添加时间</th>
+                            </tr>
+                            </thead>
+                            <tbody id="tableBody">
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="editWrapper">
+                        <button class="editBtn" id="editAdd">+</button>
+                        <button class="editBtn" id="editDel">
+                            <div>-</div>
+                        </button>
+                        <button class="editBtn" id="editEdit">
+                            <div>编辑</div>
+                        </button>
+                    </div>
+                </div>
+                <div id="btnWrapper">
+                    <div class="btn" id="previousPage">上一页</div>
+                    <ul id="pages">
+                        <li id="currentPage" class="page">0/0</li>
+                    </ul>
+                    <div class="btn" id="nextPage">下一页</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script src="js/index.js" type="module"></script>
+<script src="./js/index.js" type="module"></script>
+</body>
+</html>

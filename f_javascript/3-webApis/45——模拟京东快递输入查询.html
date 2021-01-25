@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title></title>
+		<style>
+			div {
+				width: 300px;
+				height: 50px;
+				font-size: 40px;
+				display: flex;
+				justify-content: flex-end;
+				opacity: 0;
+				overflow: hidden;
+			}
+			input {
+				width: 150px;
+				height: 20px;
+				font-size: 18px;
+			}
+		</style>
+	</head>
+	<body>
+		<div>
+			<span></span>
+		</div>
+		<input type="text" />
+		<script>
+			let [$div, $input, $span] = [
+				document.querySelector('div'),
+				document.querySelector('input'),
+			]
+			$input.addEventListener('keyup', () => {
+				let value = $input.value
+				if (value) {
+					console.log('123')
+					$div.style.opacity = 1
+					$div.innerText = value
+				}
+			})
+			$input.addEventListener('focus', () => {
+				if ($div.innerText !== null) {
+					$div.style.opacity = 1
+				}
+			})
+			$input.addEventListener('blur', () => {
+				$div.style.opacity = 0
+			})
+		</script>
+	</body>
+</html>

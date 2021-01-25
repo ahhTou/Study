@@ -1,0 +1,38 @@
+<!--components/_index/index-recommend-page/IndexRecommendPage.wxml-->
+<scroll-view class="recommend-scroll-view" scroll-y="true" bindscrolltolower="getHot">
+
+  <!-- 轮播图 with 精美大图-->
+  <view class="swiper-wrapper">
+
+    <swiper class="swiper" autoplay="true" indicator-dots="true" circular="true">
+
+      <swiper-item class="cover-wrapper">
+        <img wx:for="{{ cover }}" wx:key="id" url="{{ baseUrl + item.thumb }}" class="cover-img" />
+      </swiper-item>
+
+      <swiper-item wx:for="{{ cover }}" wx:key="id">
+        <img down="true" url="{{ baseUrl + item.thumb }}" />
+      </swiper-item>
+
+    </swiper>
+
+  </view>
+
+
+  <!-- 时间栏 -->
+  <view class="date-wrapper">
+    <view class="date-title"> ` {{ date.title }} `</view>
+    <view class="date-time">from {{ date.timeStr }}</view>
+    <view class="date-img-wrapper">
+      <img class="date-img" down="true" wx:for="{{ date.list }}" wx:key="id" url="{{ baseUrl + item.thumb }}" />
+    </view>
+  </view>
+
+  <view class="hot-wrapper">
+    <text class="hot-title">热门推荐</text>
+    <view class="hot-img-wrapper">
+      <img wx:for="{{ hot }}" down="true" class="hot-img" wx:key="_id" url="{{ baseUrl + item.thumb }}" />
+    </view>
+  </view>
+
+</scroll-view>

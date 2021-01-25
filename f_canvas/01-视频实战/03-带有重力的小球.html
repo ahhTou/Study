@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    html, body {
+        margin: 0;
+        border: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+    }
+</style>
+<body>
+<canvas id="myCanvas"></canvas>
+</body>
+<script>
+    function randomInt(low, high) {
+        return Math.floor(Math.random() * (high - low + 1) + low)
+    }
+
+    function randomColor(colors = []) {
+        console.log(colors.length)
+        return colors[Math.floor(Math.random() * colors.length)]
+    }
+
+    const canvas = document.getElementById('myCanvas')
+    const ctx = canvas.getContext('2d')
+    canvas.width = document.body.clientWidth
+    canvas.height = document.body.clientHeight
+
+    const GRAVITY = 0.8
+    const F = 0.6
+
+    const colorArr = [
+        '#FFFFCC',
+        '#CCFFFF',
+        '#FFCCCC',
+        '#CCCCFF',
+        '#FFCC99'
+    ]
+
+
+    class Ball {
+        constructor(x, y, dx, dy, radius, color) {
+            this.x = x
+            this.y = y
+            this.dy = dy
+            this.dx = dx
+            this.radius = radius
+            this.color = color
+        }
+
+        draw() {
+            ctx.beginPath() // 重新起一个路径
+            ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, false)
+            ctx.fillStyle = this.color
+            ctx.fill()
+            ctx.closePath()
+        }
+
+        move() {
+            if (this.y + this.radius + this.dy + GRAVITY > canvas.height) {
+                this.dy = -this.dy
+                this.dy *= F
+                this.dx *= F
+            } else {
+                this.dy += 0.8
+            }
+            if (this.x + this.radius + this.dy >= canvas.width ||
+                this.x - this.radius + this.dx <= 0) {
+                this.dx = -this.dx
+            }
+
+            this.x += this.dx
+            this.y += this.dy
+            this.draw()
+        }
+    }
+
+    const ballArr = []
+    for (let i = 0; i < 100; i++) {
+        let radius = randomInt(5, 15)
+        let x = randomInt(radius, canvas.width - radius)
+        let y = randomInt(radius, canvas.height - radius)
+        let dx = randomInt(-2, 2)
+        let dy = randomInt(1, 2)
+        let color = randomColor(colorArr)
+        ballArr.push(new Ball(x, y, dx, dy, radius, color))
+    }
+
+
+    // 动画，浏览器调用刷新动画
+    function animate() {
+        requestAnimationFrame(animate)
+        ctx.clearRect(0, 0, canvas.width, canvas.height)
+        for (const ball of ballArr) {
+            ball.move()
+        }
+    }
+
+    animate()
+</script>
+</html>

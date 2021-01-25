@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+<script src="https://unpkg.com/prop-types@15.6/prop-types.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+
+<script type="text/babel">
+
+    class Axios extends React.Component {
+
+        componentDidMount() {
+            const url = 'http://www.tianqiapi.com/api?version=v9&appid=23035354&appsecret=8YvlPNrz'
+
+            axios.get(url)
+                .then(res => {
+                    console.log(res.data)
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+
+            fetch(url).then(res => {
+                return res.json()
+            })
+                .then(data => {
+                    console.log(data.data)
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+
+        }
+
+        render() {
+            return (
+                <div>Hello Axios</div>
+            )
+        }
+    }
+
+
+    ReactDOM.render(
+        <Axios/>,
+        document.getElementById('root')
+    )
+</script>
+</body>
+</html>

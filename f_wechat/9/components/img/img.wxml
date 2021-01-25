@@ -1,0 +1,7 @@
+<!--components/simple-view-img/SimpleViewImg.wxml-->
+
+<view 
+bindtap="toDownload" 
+data-url="{{ url }}" 
+class="simple-view-img" 
+style="background-image:url('{{  url }}');" />

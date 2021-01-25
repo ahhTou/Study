@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!-- 开启注解扫描 -->
+    <context:component-scan base-package="U1_helloWorld, U2, U2_2_fileUpload, U2_3_Exception, U2_4_interceptor"/>
+
+    <!-- 视图解析对象 -->
+    <bean id="internalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/pages/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!-- 配置自定义类型转换器 -->
+    <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <bean class="U1_helloWorld.utils.StringToDateConverter"/>
+            </set>
+        </property>
+    </bean>
+
+
+    <!-- 前端控制器,那些资源不拦截 -->
+    <mvc:resources mapping="/js/**" location="/js/**"/>
+
+    <!--配置文件解析器-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- 文件大小限制 -->
+        <property name="maxUploadSize" value="10485760"/>
+        <!-- 编码 -->
+        <property name="defaultEncoding" value="utf-8"/>
+    </bean>
+
+    <!-- 配置异常处理器 -->
+    <bean id="sysExceptionResolver" class="U2_3_Exception.exception.SysExceptionResolver"/>
+
+    <!-- 配置拦截器 -->
+    <mvc:interceptors>
+        <!-- 配置拦截器 -->
+        <mvc:interceptor>
+            <!-- 要拦截的具体方法 -->
+            <mvc:mapping path="/day2_4/**"/>
+            <!-- 不要拦截的方法 -->
+<!--            <mvc:exclude-mapping path=""/>-->
+            <!-- 配置拦截器对象 -->
+            <bean class="U2_4_interceptor.interceptor.MyInterceptor1"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+    <!-- 开启SpringMVC框架注解支持 -->
+    <mvc:annotation-driven conversion-service="conversionService"/>
+
+
+
+</beans>

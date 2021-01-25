@@ -1,0 +1,5 @@
+<!--pages/img/img.wxml-->
+<view class="img-page-warpper">
+    <image class="img-page-img" mode="widthFix" src="{{ url }}"></image>
+  <button bindtap="download" class="img-page-download">下载</button>
+</view>

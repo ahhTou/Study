@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<style>
+    div {
+        border: 1px solid black;
+        padding: 20px;
+    }
+</style>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+<script src="https://unpkg.com/prop-types@15.6/prop-types.min.js"></script>
+</body>
+<script type="text/babel">
+    class Son extends React.Component {
+        render() {
+            const {children} = this.props
+
+            return <div>{React.Childern.map(children, (child) => React.clone)}</div>
+        }
+    }
+
+    class Father extends React.Component {
+        state = {
+            list: ['按钮1', '按钮2', '按钮3', '按钮4'],
+        }
+
+        render() {
+            return (
+                <Son>
+                    {this.state.list.map((l, index) => (
+                        <button
+                            key={index}
+                            onClick={() => {
+                                console.log('我还没被改变')
+                            }}
+                        >
+                            {l}
+                        </button>
+                    ))}
+                </Son>
+            )
+        }
+    }
+
+    ReactDOM.render(<Father/>, document.getElementById('root'))
+</script>
+</html>

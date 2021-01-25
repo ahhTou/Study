@@ -1,0 +1,27 @@
+/* pages/img/img.wxss */
+
+.img-page-warpper {
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.img-page-img {
+  margin-top: 50rpx;
+  width: 90vw;
+  border: 1px solid black;
+}
+
+.img-page-download {
+  width: 300rpx;
+  height: 100rpx;
+  border-radius: 300rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: 100rpx;
+  left: 50%;
+  transform: translate(-50%);
+}
