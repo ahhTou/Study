@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<link rel="stylesheet" href="common.css">
+<style>
+    body {
+        background: url("https://s2.ax1x.com/2020/02/27/30QwvT.jpg") center;
+        background-size: cover;
+    }
+
+    .content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100vw;
+        height: 100vh;
+    }
+</style>
+<body>
+<div class="content">
+    <canvas id="myCanvas" width="500" height="500">您的浏览器支持你妈的Canvas</canvas>
+</div>
+</body>
+<script>
+    const canvas = document.getElementById('myCanvas')
+    const ctx = canvas.getContext('2d')
+
+
+    class CubicT {
+        constructor(canvas = document.getElementById('canvas')) {
+            this.canvas = canvas
+            this.ctx = canvas.getContext('2d')
+            this.background = 'rgba(0, 0, 0, 0.5)'
+
+            this.x1 = 0
+            this.y1 = 0
+
+            this.x2 = 0
+            this.y2 = 100
+
+            this.currentX = 100
+            this.currentY = 50
+
+            this.dragSpeed = 0.05
+
+            this.mouseX = 100
+            this.mouseY = 50
+
+
+            canvas.onmouseenter = () => {
+                canvas.onmousedown = e => {
+                    const downX = e.clientX - this.canvas.offsetLeft
+                    const downY = e.clientY - this.canvas.offsetTop
+                    const tempX = this.currentX
+                    const tempY = this.currentY
+                    window.onmousemove = e => {
+                        // 相对于按下移动的距离
+                        const downMoveX = downX - (e.clientX - this.canvas.offsetLeft)
+                        const downMoveY = downY - (e.clientY - this.canvas.offsetTop)
+                        this.mouseX = tempX - downMoveX
+                        this.mouseY = tempY - downMoveY
+                    }
+                }
+
+            }
+        }
+
+        draw(x, y) {
+            this.ctx.beginPath()
+            this.ctx.fillStyle = this.background
+            this.ctx.moveTo(this.x1, this.y1)           // 创建开始点
+            this.ctx.quadraticCurveTo(x, y, this.x2, this.y2)
+            this.ctx.lineTo(this.x1, this.y1)
+            this.ctx.fill()
+            this.ctx.closePath()
+        }
+
+        update() {
+            this.draw(this.currentX, this.currentY)
+            this.currentX = this.currentX + (this.mouseX - this.currentX) * this.dragSpeed
+            // this.currentY = this.currentY + (this.mouseY - this.currentY) * this.dragSpeed
+        }
+
+    }
+
+    const pic = new CubicT(canvas)
+
+    function move() {
+        requestAnimationFrame(move)
+        ctx.clearRect(0, 0, canvas.width, canvas.height)
+        pic.update()
+    }
+
+    move()
+
+</script>
+</html>
