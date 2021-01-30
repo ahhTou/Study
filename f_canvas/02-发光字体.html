@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    * {
+        padding: 0;
+        border: 0;
+        margin: 0;
+    }
+
+    body {
+        background: black;
+    }
+
+    .content {
+        /*background: url("https://s2.ax1x.com/2020/02/27/30QwvT.jpg") center;*/
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    canvas {
+        border: 1px solid white;
+        width: 1000px;
+        height: 500px;
+    }
+</style>
+<body>
+<div class="content">
+    <canvas id="myCanvas" width="2000" height="1000"></canvas>
+</div>
+</body>
+<script>
+
+    const canvas = document.getElementById('myCanvas')
+    const ctx = canvas.getContext('2d')
+    //
+    // for (let i = 0; i < 30; i++) {
+    //     drawFont(100, i, 'rgb(255,255,255,1)')
+    // }
+    const w = canvas.width
+    const h = canvas.height
+
+    function drawFont(size = 10, shadowSize = 5, color = 'rgba(255,255,255,0.01)') {
+        ctx.save()
+        ctx.translate(w / 2, h / 2)
+        ctx.shadowColor = 'rgb(18,183,245)'
+        ctx.shadowBlur = shadowSize
+        ctx.font = `${size}pt 'Arial Rounded MT'`
+        ctx.fillStyle = color
+        ctx.textAlign = 'center'
+        ctx.textBaseline = 'middle'
+        ctx.fillText('TOU', 0, 0)
+        ctx.restore()
+    }
+
+    let i = 0
+    let time = 0
+
+    function start1() {
+        requestAnimationFrame(start)
+        if (i <= 30 && time <= 30) {
+            drawFont(100, i, 'rgb(255,255,255,1)')
+            i += 1
+        } else if (time >= 30 && time < 50) {
+            drawFont(100, 30, 'rgb(255,255,255,1)')
+        } else if (time >= 100 && time < 200) {
+            if (time % 50 === 0) {
+                for (let i = 0; i < 30; i++) {
+                    drawFont(100, i, 'rgb(255,255,255,1)')
+                }
+            } else {
+                ctx.clearRect(0, 0, canvas.width, canvas.height)
+                drawFont(100, 0, 'rgb(255,255,255,1)')
+            }
+        } else {
+            ctx.clearRect(0, 0, canvas.width, canvas.height)
+            drawFont(100, 30, 'rgb(255,255,255,1)')
+        }
+
+        time++
+    }
+
+    function start2() {
+        for (let j = 10; j < 100; j++) {
+            drawFont(600 - j * 3, 0, `rgb(250 ,${59 + j / 3},175)`)
+            drawFont(600, 0, 'rgb(254,205,138)')
+        }
+    }
+
+    start2()
+</script>
+</html>
