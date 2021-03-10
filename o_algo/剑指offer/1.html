@@ -1,18 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<p class="name1 name2"></p>
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Title</title>
+    </head>
+    <body>
+        <div id="content">
+            <div class="tip">分别输入三次的成绩</div>
+            <div id="wrapper">
+                <input class="input" />
+                <input class="input" />
+                <input class="input" />
+            </div>
+            <div class="tip">您要考多少分</div>
+            <div id="score">00.00</div>
+            <div class="bg"></div>
+        </div>
+    </body>
 
-<style>
-    body {
-        width: 100vw;
-        height: 100vw;
-        background: #000000;
-    }
-</style>
+    <script>
+        var arr = document.getElementsByClassName('input')
+        var score = []
+        for (const key in arr) {
+            score[key] = 0
+
+            arr[key].onfocus = function () {
+                arr[key].classList.add('click')
+            }
+            arr[key].onblur = function () {
+                arr[key].classList.remove('click')
+            }
+            arr[key].oninput = function () {
+                score[key] = arr[key].value
+                change()
+            }
+        }
+
+        function change() {
+            let arr = []
+            for (const key in score) {
+                if (Object.hasOwnProperty.call(score, key)) {
+                    let element = score[key] ? parseInt(score[key]) : 0
+                    element = element >= 100 ? 0 : element
+                    if (element !== 0) {
+                        arr.push(element)
+                    }
+                }
+            }
+            let res = 0
+            for (const key in arr) {
+                if (Object.hasOwnProperty.call(arr, key)) {
+                    res += arr[key]
+                }
+            }
+            res = (50 - res / 6) * 2
+            document.getElementById('score').innerText = res.toFixed(2)
+        }
+    </script>
+
+    <style>
+        .bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: scale(1.05);
+            background: url('') center no-repeat;
+            background-size: cover;
+            filter: blur(10px);
+            height: 100vh;
+            width: 100vw;
+            z-index: -100;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100vw;
+            height: 100vh;
+        }
+        * {
+            border: 0;
+            margin: 0;
+            padding: 0;
+        }
+        #wrapper {
+            display: flex;
+            justify-content: center;
+            flex-direction: row;
+            margin: 50px;
+        }
+        input {
+            box-sizing: border-box;
+            display: block;
+            height: 100px;
+            width: 200px;
+            font-size: 60px;
+            margin: 10px;
+            border: none;
+            outline: none;
+            padding: 10px;
+            background: rgb(240, 240, 240);
+        }
+
+        .click {
+            border: 1px solid rgb(155, 184, 122);
+        }
+
+        #content {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: white;
+            padding: 30px;
+            border-radius: 30px;
+            position: 10;
+        }
+        .tip {
+            font-size: 60px;
+            font-family: '微软雅黑 Light', sans-serif;
+            font-weight: bolder;
+            color: rgb(65, 65, 65);
+        }
+        #score {
+            font-size: 100px;
+            color: rgb(48, 187, 3);
+        }
+    </style>
 </html>

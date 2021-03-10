@@ -7,7 +7,10 @@
 // @match        https://nhentai.net/*
 // @grant        none
 // ==/UserScript==
+const CSS_STYLE = `
 
+
+`
 
 const config = {
     origin: 'https://nhentai.net/',
