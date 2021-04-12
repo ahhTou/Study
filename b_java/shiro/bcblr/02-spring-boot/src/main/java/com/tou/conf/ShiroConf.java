@@ -22,6 +22,7 @@ public class ShiroConf {
     // 1. 创建shiroFilter
     @Bean
     public ShiroFilterFactoryBean getShiroFilterFactoryBean(DefaultWebSecurityManager sm) {
+
         ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
 
         // 给filter 设置安全管理器

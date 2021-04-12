@@ -1,7 +1,7 @@
 from typing import List
 
 
-class Solution:
+class M:
     board = None
     word = None
     len_word = 0
@@ -141,7 +141,7 @@ class Solution:
             return 0
 
 
-a = Solution()
+a = M()
 
 # print(a.exist([["a"]], "a"))  # true
 # print(a.exist([["a"], ["a"]], "aa"))  # True

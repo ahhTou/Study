@@ -31,7 +31,6 @@ public class RedisCache<K, V> implements Cache<K, V> {
 
     @Override
     public V put(K k, V v) throws CacheException {
-        System.out.println("Shiro-Redis-Put");
         redisTemplate.opsForHash().put(this.cacheName, k, v);
         return v;
     }

@@ -1,7 +1,7 @@
 from typing import List
 
 
-class Solution:
+class M:
     def printNumbers_my(self, n: int) -> List[int]:
         if n is 0:
             return []
@@ -20,5 +20,5 @@ class Solution:
         return res
 
 
-a = Solution()
+a = M()
 print(a.printNumbers(0))

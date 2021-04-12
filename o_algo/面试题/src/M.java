@@ -1,8 +1,9 @@
 import utils.ListNode;
+import utils.TreeNode;
 
 import java.util.*;
 
-public class Solution {
+public class M {
     /*
      * 01. 判断字符串是否唯一
      * */
@@ -355,7 +356,6 @@ public class Solution {
         return true;
     }
 
-
     /*
      * 面试题 02.07. 链表相交
      * */
@@ -388,6 +388,118 @@ public class Solution {
         return head;
     }
 
+    /*
+     * 面试题 04.02. 最小高度树
+     */
+    public TreeNode sortedArrayToBST(int[] nums) {
+        if (nums.length == 0) return null;
+        return sortedArrayToBST_helper(nums, 0, nums.length - 1);
+    }
 
+    public TreeNode sortedArrayToBST_helper(int[] nums, int i, int j) {
+        if (j == 0 || i == j) return new TreeNode(nums[j]);
+
+        int mid = ((i + j) % 2 == 0) ? ((i + j) / 2) : ((i + j) / 2 + 1);
+
+        TreeNode res = new TreeNode(nums[mid]);
+
+        if (j - i == 1) {
+            res.left = new TreeNode(nums[i]);
+        } else if (j - i == 2) {
+            res.right = new TreeNode(nums[mid + 1]);
+            res.left = new TreeNode(nums[mid - 1]);
+        } else {
+            res.left = sortedArrayToBST_helper(nums, i, mid - 1);
+            res.right = sortedArrayToBST_helper(nums, mid + 1, j);
+        }
+
+        return res;
+    }
+
+    /*
+     * 面试题 04.03. 特定深度节点链表
+     * */
+    public ListNode[] listOfDepth(TreeNode tree) {
+        List<TreeNode> tree_arr = new LinkedList<>();
+        List<ListNode> res = new LinkedList<>();
+        tree_arr.add(tree);
+
+        while (!tree_arr.isEmpty()) {
+            List<TreeNode> temp = new LinkedList<>();
+            for (TreeNode a_tree : tree_arr) {
+                if (a_tree.left != null) temp.add(a_tree.left);
+                if (a_tree.right != null) temp.add(a_tree.right);
+            }
+            res.add(listOfDepth_helper(tree_arr));
+            tree_arr = temp;
+        }
+
+        return res.toArray(new ListNode[0]);
+    }
+
+    public ListNode listOfDepth_helper(List<TreeNode> list) {
+        if (list.isEmpty()) return null;
+        ListNode res = new ListNode(list.remove(0).val);
+        res.next = listOfDepth_helper(list);
+        return res;
+    }
+
+    /*
+     * 面试题 04.04. 检查平衡性
+     * */
+    public boolean isBalanced(TreeNode root) {
+        int res = isBalanced_helper(root);
+        System.out.println(res);
+        return res != -1;
+/*        if (root == null) return true;
+
+        int l = isBalanced_helper(root.left);
+        System.out.println("final l is " + l);
+        if (l == -1) return false;
+
+        int r = isBalanced_helper(root.right);
+        System.out.println("final r is " + r);
+        if (r == -1) return false;
+
+        return Math.abs(r - l) < 2;*/
+    }
+
+    public int isBalanced_helper(TreeNode tree) {
+        if (tree == null) return 1;
+
+        int r = isBalanced_helper(tree.right);
+
+        if (r == -1) return -1;
+
+        int l = isBalanced_helper(tree.left);
+
+        if (l == -1) return -1;
+
+        if (Math.abs(r - l) >= 2) return -1;
+
+        return Math.max(r, l) + 1;
+    }
+
+
+    /*
+     * 面试题 04.05. 合法二叉搜索树
+     */
+    public boolean isValidBST(TreeNode root) {
+        return isValidBST_helper(root, Long.MIN_VALUE, Long.MAX_VALUE);
+    }
+
+    public boolean isValidBST_helper(TreeNode root, long min, long max) {
+        if (root == null) return true;
+
+        return (root.val > min && root.val < max)
+                && isValidBST_helper(root.right, root.val, max)
+                && isValidBST_helper(root.left, min, root.val);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new M().isValidBST(TreeNode.createTree(
+                new LinkedList<>(Arrays.asList(2, 1, 3))
+        )));
+    }
 
 }

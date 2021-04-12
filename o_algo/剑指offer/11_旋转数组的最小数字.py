@@ -1,7 +1,7 @@
 from typing import List
 
 
-class Solution:
+class M:
     def minArray(self, numbers: List[int]) -> int:
         length = len(numbers) - 1
         if length > 0:
@@ -13,5 +13,5 @@ class Solution:
         return numbers[0]
 
 
-a = Solution()
+a = M()
 print(a.minArray([1]))

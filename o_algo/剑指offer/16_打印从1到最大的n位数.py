@@ -1,4 +1,4 @@
-class Solution:
+class M:
     def hammingWeight(self, n: int) -> int:
         res = 0
         while n:
@@ -7,5 +7,5 @@ class Solution:
         return res
 
 
-a = Solution()
+a = M()
 print(a.hammingWeight(1))

@@ -1,4 +1,4 @@
-class Solution:
+class M:
     def fib(self, n: int) -> int:
         content = [0, 1]
         now = 2
@@ -13,6 +13,6 @@ class Solution:
             return res % 1000000007
 
 
-a = Solution()
+a = M()
 
 print(a.fib(11))

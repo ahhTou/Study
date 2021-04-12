@@ -1,7 +1,7 @@
 from typing import List
 
 
-class Solution:
+class M:
     board = word = None
     len_word = len_board = len_list = index = 0
     is_ban = []
@@ -51,7 +51,7 @@ class Solution:
         return False
 
 
-a = Solution()
+a = M()
 
 # print(a.exist([["a"]], "a"))  # true
 # print(a.exist([["a"], ["a"]], "aa"))  # True

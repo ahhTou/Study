@@ -1,4 +1,4 @@
-class Solution:
+class M:
     def numWays(self, n: int) -> int:
         if n == 0:
             return 1
@@ -10,5 +10,5 @@ class Solution:
         return a1 % 1000000007
 
 
-a = Solution()
+a = M()
 print(a.numWays(10))
