@@ -1,3 +1,6 @@
+import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
+import com.sun.org.apache.bcel.internal.generic.NEW;
+import com.sun.xml.internal.ws.addressing.WsaActionUtil;
 import utils.ListNode;
 import utils.TreeNode;
 
@@ -496,10 +499,119 @@ public class M {
                 && isValidBST_helper(root.left, min, root.val);
     }
 
+    /*
+     * 面试题 04.06. 后继者
+     */
+    public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
+        if (root == null) return null;
+
+
+        TreeNode left_res = inorderSuccessor(root.left, p);
+        if (left_res != null) return left_res;
+
+        if (p.val < root.val) return root;
+
+        return inorderSuccessor(root.right, p);
+    }
+
+    /*
+     * 面试题 04.08. 首个共同祖先
+     * */
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null || root == p || root == q) return root;
+
+        TreeNode right = lowestCommonAncestor(root.right, p, q);
+
+        TreeNode left = lowestCommonAncestor(root.left, p, q);
+
+        if (left != null && right != null) return root;
+
+        if (left != null) return left;
+
+        return right;
+    }
+
+    /**
+     * 面试题 08.01. 三步问题
+     */
+    public int waysToStep(int n) {
+
+        int[] dp = new int[n];
+        if (n == 1) return 1;
+        if (n == 2) return 2;
+        if (n == 3) return 4;
+        dp[0] = 1;
+        dp[1] = 2;
+        dp[2] = 4;
+
+        for (int i = 3; i < n; i++)
+            dp[i] = ((dp[i - 3] + dp[i - 2]) % 1000000007 + dp[i - 1]) % 1000000007;
+
+        return dp[n - 1];
+    }
+
+    /**
+     * 面试题 08.02. 迷路的机器人
+     */
+    public List<List<Integer>> pathWithObstacles(int[][] obstacleGrid) {
+        List<List<Integer>> res = new ArrayList<>();
+        pathWithObstacles_helper(0, 0, obstacleGrid, res);
+        return res;
+    }
+
+    public boolean pathWithObstacles_helper(int x, int y, int[][] map, List<List<Integer>> now) {
+        int m = map.length - 1;
+        int n = map[0].length - 1;
+
+        if (map[x][y] == 1) return false;
+
+        now.add(Arrays.asList(x, y));
+
+        if (x == m && y == n) return true;
+
+        if ((x <= m && pathWithObstacles_helper(x + 1, y, map, now))
+                || (y <= n && pathWithObstacles_helper(x, y + 1, map, now))) return true;
+
+        now.remove(now.size() - 1);
+
+        map[x][y] = 1;
+
+        return false;
+
+    }
+
+    /**
+     * 面试题 08.10. 颜色填充
+     */
+    public int[][] floodFill(int[][] image, int sr, int sc, int newColor) {
+        int[][] visitor = new int[image.length][image[0].length];
+        floodFill_helper(image, sr, sc, visitor, image[sr][sc], newColor);
+        return image;
+    }
+
+    public void floodFill_helper(int[][] image, int sr, int sc, int[][] visitor, int targetColor, int newColor) {
+        visitor[sr][sc] = 1;
+        if (image[sr][sc] == targetColor) {
+            image[sr][sc] = newColor;
+        } else return;
+
+        int m = image.length, n = image[0].length;
+
+        if (sr + 1 < m && visitor[sr + 1][sc] != 1)
+            floodFill_helper(image, sr + 1, sc, visitor, targetColor, newColor);
+        if (sr - 1 >= 0 && visitor[sr - 1][sc] != 1)
+            floodFill_helper(image, sr - 1, sc, visitor, targetColor, newColor);
+        if (sc + 1 < n && visitor[sr][sc + 1] != 1)
+            floodFill_helper(image, sr, sc + 1, visitor, targetColor, newColor);
+        if (sc - 1 >= 0 && visitor[sr][sc - 1] != 1)
+            floodFill_helper(image, sr, sc - 1, visitor, targetColor, newColor);
+
+    }
+
     public static void main(String[] args) {
-        System.out.println(new M().isValidBST(TreeNode.createTree(
-                new LinkedList<>(Arrays.asList(2, 1, 3))
-        )));
+        System.out.println(Arrays.deepToString(new M().floodFill(new int[][]{
+                new int[]{1, 1, 1}, new int[]{1, 1, 0}, new int[]{1, 0, 1}
+        }, 1, 1, 2)));
     }
 
 }
