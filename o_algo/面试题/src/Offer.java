@@ -1,3 +1,6 @@
+import com.sun.org.apache.bcel.internal.generic.FADD;
+import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
+import sun.security.krb5.internal.PAData;
 import utils.TreeNode;
 
 import java.util.*;
@@ -267,6 +270,250 @@ public class Offer {
         if (res_left != null) return res_left; // p q 都在左子树
 
         return res_right;// p q 都在右子树 时候返回res_right节点 否则返回null
+    }
+
+    /*
+     * 剑指 Offer 26. 树的子结构
+     * */
+    public boolean isSubStructure(TreeNode a, TreeNode b) {
+        if (a == null || b == null) return false;
+
+        if (a.val == b.val && isSubStructure_helper(a, b)) return true;
+
+        return isSubStructure(a.left, b) || isSubStructure(a.right, b);
+    }
+
+    public boolean isSubStructure_helper(TreeNode a, TreeNode b) {
+        if (b == null) return true;
+
+        if (a == null) return false;
+
+        if (a.val != b.val) return false;
+
+        return isSubStructure_helper(a.left, b.left) && isSubStructure_helper(a.right, b.right);
+    }
+
+    /*
+     * 剑指 Offer 31. 栈的压入、弹出序列
+     * */
+    public boolean validateStackSequences(int[] pushed, int[] popped) {
+        if (pushed.length != popped.length) return false;
+
+        Stack<Integer> stack = new Stack<>();
+
+        int i = 0, j = 0;
+
+        while (i < popped.length) {
+
+            stack.push(pushed[i]);
+            i++;
+
+            while (!stack.isEmpty() && stack.peek() == popped[j]) {
+                stack.pop();
+                j++;
+            }
+
+        }
+        return stack.isEmpty();
+    }
+
+    /*
+     * 剑指 Offer 46. 把数字翻译成字符串
+     * */
+    public int translateNum(int num) {
+        String c = num + "";
+        if (c.length() <= 1) return c.length();
+
+        int[] dp = new int[c.length()];
+
+        dp[0] = 1;
+        String dp1 = c.substring(0, 2);
+        dp[1] = (dp1.compareTo("10") >= 0 && dp1.compareTo("25") <= 0) ? 2 : 1;
+        if (c.length() == 2) return dp[1];
+
+
+        for (int i = 2; i < c.length(); i++) {
+            String temp = c.substring(i - 1, i + 1);
+            if (temp.compareTo("10") >= 0 && temp.compareTo("25") <= 0)
+                dp[i] = dp[i - 1] + dp[i - 2];
+            else
+                dp[i] = dp[i - 1];
+        }
+
+        return dp[c.length() - 1];
+
+    }
+
+    /*
+     * 硬 剑指 Offer 38. 字符串的排列
+     * */
+    public String[] _permutation(String s) {
+        Set<String> res = new HashSet<>();
+        _permutation_helper("", s, res);
+        return res.toArray(new String[]{});
+    }
+
+    public void _permutation_helper(String prefix, String suffix, Set<String> set) {
+        if (suffix.length() == 0) set.add(prefix);
+
+        for (int i = 0; i < suffix.length(); i++) {
+            StringBuilder sb = new StringBuilder(suffix);
+            _permutation_helper(prefix + sb.charAt(i), sb.deleteCharAt(i).toString(), set);
+        }
+
+    }
+
+    /*
+     * dfs 剑指 Offer 38. 字符串的排列
+     * */
+    public String[] __permutation(String s) {
+        HashSet<String> res = new HashSet<>();
+        boolean[] visited = new boolean[s.length()];
+
+        __permutation_helper(new char[s.length()], 0, s, visited, res);
+
+        return res.toArray(new String[]{});
+
+    }
+
+    public void __permutation_helper(char[] s, int len, String str, boolean[] visited, HashSet<String> list) {
+        if (len >= str.length()) {
+            list.add(String.valueOf(s));
+            return;
+        }
+
+        for (int i = 0; i < str.length(); i++) {
+            s[len] = str.charAt(i);
+            if (!visited[i]) {
+                visited[i] = true;
+                __permutation_helper(s, ++len, str, visited, list);
+                visited[i] = false;
+                len--;
+            }
+        }
+
+    }
+
+    /*
+     * 硬 剑指 Offer 38. 字符串的排列
+     * */
+    public String[] permutation(String s) {
+        List<String> res = new ArrayList<>();
+        permutation_dfs(0, s.toCharArray(), res);
+        return res.toArray(new String[]{});
+    }
+
+    public void permutation_dfs(int len, char[] str, List<String> list) {
+        if (len == str.length) {
+            list.add(String.valueOf(str));
+            return;
+        }
+
+        for (int i = len; i < str.length; i++) {
+            boolean flag = false;
+
+            for (int j = len; j < i; j++) {
+                if (str[i] == str[j]) {
+                    flag = true;
+                    break;
+                }
+            }
+
+            if (flag) continue;
+
+            permutation_swap(str, len, i);
+            permutation_dfs(len + 1, str, list);
+            permutation_swap(str, len, i);
+
+        }
+
+    }
+
+    public void permutation_swap(char[] s, int i, int j) {
+        char temp = s[i];
+        s[i] = s[j];
+        s[j] = temp;
+    }
+
+    /*
+     * 剑指 Offer 33. 二叉搜索树的后序遍历序列
+     * */
+    public boolean _verifyPostorder(int[] postorder) {
+        if (postorder.length <= 1) return true;
+
+        List<Integer> li = new ArrayList<>();
+        for (int i = postorder.length - 1; i >= 0; i--) li.add(postorder[i]);
+
+        return _verifyPostorder_helper(li, Integer.MAX_VALUE, Integer.MIN_VALUE);
+
+    }
+
+    public boolean _verifyPostorder_helper(List<Integer> li, int max, int min) {
+        int mid = li.remove(0);
+
+        if (mid > max || mid < min) return false;
+
+        if (li.isEmpty()) return true;
+
+        if (mid > li.get(0)) return _verifyPostorder_helper(li, mid, min);
+
+        for (int i = 0; i < li.size(); i++)
+            if (mid > li.get(i)) return _verifyPostorder_helper(li.subList(i, li.size()), mid, min)
+                    && _verifyPostorder_helper(li.subList(0, i), max, mid);
+
+        return _verifyPostorder_helper(li, max, mid);
+
+    }
+
+    public boolean verifyPostorder(int[] postorder) {
+        return verifyPostorder_helper(postorder, 0, postorder.length - 1);
+
+    }
+
+    public boolean verifyPostorder_helper(int[] li, int start, int end) {
+        if (start >= end) return true;
+        int p = start;
+        while (li[p] < li[end]) p++;
+        int mid = p;
+        while (li[p] > li[end]) p++;
+        return p == end && verifyPostorder_helper(li, start, mid - 1) && verifyPostorder_helper(li, mid, end - 1);
+    }
+
+    /*
+     * 剑指 Offer 34. 二叉树中和为某一值的路径
+     * */
+    public List<List<Integer>> pathSum(TreeNode root, int target) {
+        List<List<Integer>> res = new LinkedList<>();
+        pathSun_dfs(root, res, new LinkedList<>(), 0, target);
+        return res;
+    }
+
+    public void pathSun_dfs(TreeNode root, List<List<Integer>> paths, LinkedList<Integer> path, int total, int target) {
+        // 出口
+        if (root == null) return;
+
+        total += root.val;
+        path.add(root.val);
+
+        if (total == target && root.left == null && root.right == null) {
+            paths.add(new LinkedList<>(path));
+        }
+
+        pathSun_dfs(root.left, paths, path, total, target);
+        pathSun_dfs(root.right, paths, path, total, target);
+
+        path.removeLast();
+    }
+
+    public static void main(String[] args) {
+
+        Offer offer = new Offer();
+
+        TreeNode tree = TreeNode.createTree(new LinkedList<>(Arrays.asList(-2, null, -3)));
+
+        List<List<Integer>> lists = offer.pathSum(tree, -5);
+
+        System.out.println(lists);
     }
 
 

@@ -7,41 +7,43 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 import utils.TreeNode;
 
-import java.util.Arrays;
-import java.util.Deque;
-import java.util.LinkedList;
+import java.util.*;
 
 // @RunWith(Parameterized.class)
 public class MyTest {
 
-    Offer offer = new Offer();
+    public static void main(String[] args) {
 
-    int[] a;
-    int res;
-    boolean flag;
+        new Son() {{
+            say(3);
+        }};
 
-/*    public MyTest(int[] a, int res) {
-        this.a = a;
-        this.res = res;
-    }*/
-
-    @Test
-    public void voidMaxDepth() {
-        Deque<Integer> deque = new LinkedList<>(Arrays.asList(3, 5, 1, 6, 2, 0, 8, null, null, 7, 4));
-        TreeNode root = TreeNode.createTree(deque);
-        TreeNode p = root.left;
-        TreeNode q = root.right;
-        System.out.println(offer.lowestCommonAncestor(root, p, q).val);
     }
 
+}
 
-    // @Parameters
-/*
-    public static Object[] testMissingNumberParameters() {
-        return new Object[][]{
-                {new int[]{1, 2, 3, 4, 5}, true},
-        };
+class Son extends Father {
+
+    public Son() {
+        super();
+        System.out.println("儿子初始化了");
+        say(2);
     }
-*/
 
+    @Override
+    public void say(int i) {
+        System.out.println("我是儿子 " + i);
+    }
+
+}
+
+class Father {
+    public Father() {
+        System.out.println("父亲初始化了");
+        say(1);
+    }
+
+    public void say(int i) {
+        System.out.println("我是父亲 " + i);
+    }
 }

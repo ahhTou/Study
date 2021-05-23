@@ -1,6 +1,3 @@
-import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
-import com.sun.org.apache.bcel.internal.generic.NEW;
-import com.sun.xml.internal.ws.addressing.WsaActionUtil;
 import utils.ListNode;
 import utils.TreeNode;
 
@@ -608,10 +605,87 @@ public class M {
 
     }
 
+    /*
+     * 面试题 08.03. 魔术索引
+     */
+    public int findMagicIndex(int[] nums) {
+        return findMagicIndex_helper(nums, 0, nums.length - 1);
+    }
+
+    public int findMagicIndex_helper(int[] nums, int j, int k) {
+        if (j == k || j + 1 == k) {
+            if (nums[j] == j) return j;
+            if (nums[k] == k) return k;
+            return -1;
+        }
+
+        int mid = (j + k) / 2;
+
+        if (nums[mid] == mid) {
+            int res = findMagicIndex_helper(nums, j, mid);
+            return res == -1 ? mid : res;
+        }
+
+        if (nums[mid] != mid) {
+            int left_res = findMagicIndex_helper(nums, j, mid);
+            if (left_res != -1) return left_res;
+            return findMagicIndex_helper(nums, mid, k);
+        }
+
+        return -1;
+
+    }
+
+    /**
+     * 原地逆序 面试题 10.01. 合并排序的数组
+     */
+    public void merge(int[] A, int m, int[] B, int n) {
+        int i = m - 1, j = n - 1, k = m + n - 1;
+        while (i >= 0 && j >= 0) {
+            A[k--] = A[i] < B[j] ? B[j--] : A[i--];
+        }
+        while (j >= 0) A[k--] = B[j--];
+    }
+
+    /*
+     * 面试题 10.02. 变位词组
+     * */
+    public List<List<String>> groupAnagrams(String[] strs) {
+        Map<String, List<String>> map = new HashMap<>();
+        List<List<String>> res = new ArrayList<>();
+
+        int[] temp;
+        for (String str : strs) {
+            temp = new int[26];
+            for (char s : str.toCharArray()) temp[s - 'a']++;
+            String key = Arrays.toString(temp);
+            if (map.containsKey(key)) {
+                map.get(key).add(str);
+            } else map.put(key, new ArrayList<>(Collections.singletonList(str)));
+        }
+
+        for (String s : map.keySet()) res.add(map.get(s));
+        return res;
+    }
+
+    /*
+     * 面试题 16.11. 跳水板
+     * */
+    public int[] divingBoard(int shorter, int longer, int k) {
+        if (k == 0) return new int[]{};
+        if (shorter == longer) return new int[]{shorter * k};
+        int a = k, b = 0;
+        int[] res = new int[k + 1];
+        while (a != -1)
+            res[b] = a-- * shorter + b++ * longer;
+
+        return res;
+    }
+
+
+
     public static void main(String[] args) {
-        System.out.println(Arrays.deepToString(new M().floodFill(new int[][]{
-                new int[]{1, 1, 1}, new int[]{1, 1, 0}, new int[]{1, 0, 1}
-        }, 1, 1, 2)));
+        M m = new M();
     }
 
 }

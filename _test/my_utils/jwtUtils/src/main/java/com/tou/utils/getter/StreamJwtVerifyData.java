@@ -2,11 +2,9 @@ package com.tou.utils.getter;
 
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.tou.utils.JwtProperty;
-import com.tou.utils.handler.IJwtVerifyErrHandler;
 
-import com.tou.utils.handler.IJwtVerifySuccessHandler;
-import com.tou.utils.service.JwtService;
+import com.tou.utils.TokenProperty;
+import com.tou.utils.JwtService;
 import lombok.Data;
 
 import java.util.Map;
@@ -29,19 +27,10 @@ public class StreamJwtVerifyData implements IStreamJwtVerifyData {
         return isValid;
     }
 
-    @Override
-    public void doHandler(IJwtVerifySuccessHandler success, IJwtVerifyErrHandler error) {
-        if (isValid()) {
-            success.handle(this);
-        } else {
-            error.handler(getException());
-        }
-    }
-
-    public StreamJwtVerifyData(String token, JwtProperty property) {
+    public StreamJwtVerifyData(TokenProperty property) {
         DecodedJWT verify = null;
         try {
-            verify = JwtService.verify(token, property.getSECRET());
+            verify = JwtService.verify(property.getToken(), property.getSecret());
             this.setClaims(verify.getClaims());
         } catch (Exception e) {
             setException(e);
