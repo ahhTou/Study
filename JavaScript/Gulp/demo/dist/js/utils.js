@@ -1,0 +1,1 @@
+"use strict";console.log("hello");for(var a=123,i=0;i<10;i++)console.log(i);var num=10;console.log(num);

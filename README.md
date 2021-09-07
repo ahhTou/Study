@@ -1,8 +1,14 @@
+# 面试冲击
+
+`网课自学`**JVM 入门** [黑马](https://www.bilibili.com/video/BV1yE411Z7AP)
+
+`网课自学`MySQL索引 [编程不良人](https://www.bilibili.com/video/BV19y4y127h4)
+
 # 学过的
 
 ## 基础
 
-- ``网课自学``** 基础入门**：[黑马](https://www.bilibili.com/video/BV18J411W7cE)
+- ``网课自学``**基础入门**：[黑马](https://www.bilibili.com/video/BV18J411W7cE)
 - ``网课自学``**注解和反射** : [狂神](https://www.bilibili.com/video/BV1p4411P7V3)
 - ``网课自学``多线程： [狂神](https://www.bilibili.com/video/BV1V4411p7EF)
 - ``网课自学``JavaWeb ：Tomcat、Maven 、**Servlet**、Cookie-Session 、过滤器 、监听器
@@ -49,9 +55,9 @@ Oracle
 
 ``学习中``**SpringBoot入门**
 
-``学习中``**SpringSecurity** 
+``未开始``**SpringSecurity** 
 
-``学习中``Shiro
+``初步学习``Shiro
 
 
 

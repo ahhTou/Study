@@ -1,0 +1,1 @@
+div,h1,p{width:100px;height:100px;background:red}div{-webkit-transition:all 1s linear;-moz-transition:all 1s linear;transition:all 1s linear}h1{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:flex;color:beige}
